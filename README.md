@@ -108,6 +108,21 @@ sys.stdout.write(json.dumps(output))
 sys.stdout.flush()
 ```
 
+## Cron-like functionality
+
+It is possible to trigger the running of scripts periodically using the cron functionality.
+In the admin select the url you want to invoke periodically every interval minutes.
+
+Setup the django management command in your server's cron to run the management command to
+automate this.
+
+In `/etc/cron.d/` create a new file called urlscript with the following contents:
+
+```bash
+SHELL=/bin/bash
+* * * * * ubuntu source ~/us_env/bin/activate && cd ~/urlscript && python manage.py run_urlscript
+```
+
 ## Supported Languages
 
 - Python
