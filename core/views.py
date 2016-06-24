@@ -70,31 +70,33 @@ def run_fn(request, slug=None):
     with open(os.path.join(base_dir, "script"), "w") as script_file:
         script_file.write(url_script.script)
         script_file.close()
-        cmd = [os.path.join(settings.BUBBLEWRAP_PATH, "bwrap"),
-               "--dir", "/tmp",
-               "--proc", "/proc",
-               "--dev", "/dev",
-               "--ro-bind", "/usr", "/usr",
-               "--ro-bind", "/etc/resolv.conf", "/etc/resolv.conf",
-               "--ro-bind", "/etc/ssl", "/etc/ssl",
-               "--ro-bind", "/etc/pki", "/etc/pki",
-               "--symlink", "usr/lib", "/lib",
-               "--symlink", "usr/lib64", "/lib64",
-               "--symlink", "usr/bin", "/bin",
-               "--symlink", "usr/sbin", "/sbin",
-               "--unshare-user",
-               "--uid", "0",
-               "--gid", "0",
-               "--unshare-pid",
-               "--setenv", "XDG_RUNTIME_DIR", "/run/user/0",
-               "--chdir", "/run/user/0",
-               "--bind", script_file.name, "/run/user/0/script." + lang,
-               "--dir", "/run/user/0",
-               "--dir", settings.SCRIPTS_TMP_DIR,
-               "--bind", settings.SCRIPTS_TMP_DIR, settings.SCRIPTS_TMP_DIR,
-               settings.LANGUAGE_EXECUTABLE[url_script.language],
-               "script." + lang,
+        bwrap_executable = [os.path.join(settings.BUBBLEWRAP_PATH, "bwrap")]
+        options = [
+            "--dir", "/tmp",
+            "--proc", "/proc",
+            "--dev", "/dev",
+            "--ro-bind", "/usr", "/usr",
+            "--ro-bind", "/etc/resolv.conf", "/etc/resolv.conf",
+            "--ro-bind", "/etc/ssl", "/etc/ssl",
+            "--ro-bind", "/etc/pki", "/etc/pki",
+            "--symlink", "usr/lib", "/lib",
+            "--symlink", "usr/lib64", "/lib64",
+            "--symlink", "usr/bin", "/bin",
+            "--symlink", "usr/sbin", "/sbin",
+            "--unshare-user",
+            "--uid", "0",
+            "--gid", "0",
+            "--unshare-pid",
+            "--dir", "/run/user/0",
+            "--chdir", "/run/user/0",
+            "--bind", script_file.name, "/run/user/0/script." + lang,
         ]
+        custom_options = settings.BWRAP_CUSTOM_OPTIONS
+        executable = [
+            settings.LANGUAGE_EXECUTABLE[url_script.language],
+            "script." + lang,
+        ]
+        cmd = bwrap_executable + options + custom_options + executable
         try:
             exit_code = subprocess.call(
                 cmd,

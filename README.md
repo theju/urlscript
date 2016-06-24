@@ -34,6 +34,7 @@ contains a lot of the configuration details (see [django settings](https://docs.
 Settings specific to URLScript:
 
 - BUBBLEWRAP_PATH: Path where the `bwrap` executable resides
+- BWRAP_CUSTOM_OPTIONS: Additional arguments to pass to the bwrap executable. e.g --dir /abc /abc
 - SCRIPTS_TMP_DIR: Where the temporary stdin, stdout and script will reside
 - SCRIPT_TIMEOUT: The max time for the script to run
 - LANGUAGE_EXECUTABLE: The executable path for the languages.

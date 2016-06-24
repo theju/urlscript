@@ -128,6 +128,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # The path where the bwrap executable is located
 BUBBLEWRAP_PATH = ""
+# Custom args that can be sent to the bwrap executable e.g --dir /abc /abc etc
+BWRAP_CUSTOM_OPTIONS = ""
 # Preferably make the below a RAMfs to make it faster
 SCRIPTS_TMP_DIR = ""
 # The max time for the scripts to run
