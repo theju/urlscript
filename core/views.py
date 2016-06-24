@@ -91,7 +91,7 @@ def run_fn(request, slug=None):
             "--chdir", "/run/user/0",
             "--bind", script_file.name, "/run/user/0/script." + lang,
         ]
-        custom_options = settings.BWRAP_CUSTOM_OPTIONS
+        custom_options = settings.BWRAP_CUSTOM_OPTIONS.split(" ")
         executable = [
             settings.LANGUAGE_EXECUTABLE[url_script.language],
             "script." + lang,
