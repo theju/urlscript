@@ -130,3 +130,7 @@ SHELL=/bin/bash
 - Javascript (Node)
 
 Support for other languages should also be possible. Feel free to send a PR to add support.
+
+## License
+
+Released under the `MIT License`. Please reference to the `LICENSE.txt` for more details.
