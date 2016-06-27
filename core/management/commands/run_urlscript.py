@@ -1,4 +1,7 @@
-import urllib
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib import urlopen
 import datetime
 import multiprocessing
 
@@ -11,7 +14,7 @@ from core.models import URL, Cron
 
 
 def request_url(url):
-    urllib.urlopen("http://{0}{1}".format(
+    urlopen("http://{0}{1}".format(
         Site.objects.get_current().domain,
         reverse("run_fn", kwargs={"slug": url.slug})
     ))
@@ -30,7 +33,6 @@ class Command(BaseCommand):
         intervals = Cron.objects.filter(interval__lte=mins_passed)\
                                 .values_list('interval', flat=True).\
                                 order_by('interval').distinct()
-        request = ""
         for interval in intervals:
             if mins_passed % interval == 0 or settings.DEBUG:
                 for cron in Cron.objects.filter(interval=interval):
