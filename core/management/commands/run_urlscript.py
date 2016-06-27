@@ -14,7 +14,7 @@ from core.models import URL, Cron
 
 
 def request_url(url):
-    urlopen("http://{0}{1}".format(
+    urlopen("{0}{1}".format(
         Site.objects.get_current().domain,
         reverse("run_fn", kwargs={"slug": url.slug})
     ))
