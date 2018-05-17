@@ -20,7 +20,7 @@ class URL(models.Model):
 
 
 class Cron(models.Model):
-    url = models.ForeignKey('URL')
+    url = models.ForeignKey('URL', on_delete=models.CASCADE)
     # Interval in minutes
     interval = models.PositiveIntegerField(default=60)
     created_on = models.DateTimeField(auto_now_add=True)
