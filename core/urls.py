@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 import core.views
 
 urlpatterns = [
-    url(r'^u/(?P<slug>[\w\-\+\.]+)/?$', core.views.run_fn, name="run_fn"),
+    re_path(r'^u/(?P<slug>[\w\-\+\.]+)/?$', core.views.run_fn, name="run_fn"),
 ]
